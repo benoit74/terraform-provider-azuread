@@ -6,6 +6,8 @@ subcategory: "Conditional Access"
 
 Manages a Conditional Access Policy within Azure Active Directory.
 
+~> **Warning** Specifying `client_applications` property requires the activation of Microsoft Entra on your tenant and the availability of sufficient Workload Identities Premium licences (one per service principal managed by a conditional access).
+
 ## API Permissions
 
 The following API permissions are required in order to use this resource.
@@ -52,6 +54,11 @@ resource "azuread_conditional_access_policy" "example" {
       included_users = ["All"]
       excluded_users = ["GuestsOrExternalUsers"]
     }
+
+    client_applications {
+      included_service_principals = ["None"]
+      excluded_service_principals = []
+    }
   }
 
   grant_controls {
@@ -90,6 +97,7 @@ The following arguments are supported:
 * `sign_in_risk_levels` - (Optional) A list of sign-in risk levels included in the policy. Possible values are: `low`, `medium`, `high`, `hidden`, `none`, `unknownFutureValue`.
 * `user_risk_levels` - (Optional) A list of user risk levels included in the policy. Possible values are: `low`, `medium`, `high`, `hidden`, `none`, `unknownFutureValue`.
 * `users` - (Required) A `users` block as documented below, which specifies users, groups, and roles included in and excluded from the policy.
+* `client_applications` - (Required) An `client_applications` block as documented below, which specifies service principals included in and excluded from the policy.
 
 ---
 
@@ -160,6 +168,13 @@ The following arguments are supported:
 * `persistent_browser_mode` - (Optional) Session control to define whether to persist cookies or not. Possible values are: `always` or `never`.
 * `sign_in_frequency` - (Optional) Number of days or hours to enforce sign-in frequency. Required when `sign_in_frequency_period` is specified. Due to an API issue, removing this property forces a new resource to be created.
 * `sign_in_frequency_period` - (Optional) The time period to enforce sign-in frequency. Possible values are: `hours` or `days`. Required when `sign_in_frequency_period` is specified. Due to an API issue, removing this property forces a new resource to be created.
+
+---
+
+`client_applications` block supports the following:
+
+* `included_service_principals` - (Optional) A list of service principal IDs explicitly included in the policy. Can also be set to `All` or `None`.
+* `excluded_service_principals` - (Optional) A list of service principal IDs explicitly excluded in the policy.
 
 ---
 

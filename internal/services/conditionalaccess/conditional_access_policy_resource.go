@@ -106,6 +106,33 @@ func conditionalAccessPolicyResource() *schema.Resource {
 							},
 						},
 
+						"client_applications": {
+							Type:     schema.TypeList,
+							Required: true,
+							MaxItems: 1,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+									"included_service_principals": {
+										Type:     schema.TypeList,
+										Optional: true,
+										Elem: &schema.Schema{
+											Type:             schema.TypeString,
+											ValidateDiagFunc: validate.NoEmptyStrings,
+										},
+									},
+
+									"excluded_service_principals": {
+										Type:     schema.TypeList,
+										Optional: true,
+										Elem: &schema.Schema{
+											Type:             schema.TypeString,
+											ValidateDiagFunc: validate.NoEmptyStrings,
+										},
+									},
+								},
+							},
+						},
+
 						"users": {
 							Type:     schema.TypeList,
 							Required: true,
