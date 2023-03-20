@@ -90,14 +90,14 @@ The following arguments are supported:
 `conditions` block supports the following:
 
 * `applications` - (Required) An `applications` block as documented below, which specifies applications and user actions included in and excluded from the policy.
-* `client_applications` - (Required) An `client_applications` block as documented below, which specifies service principals included in and excluded from the policy.
+* `client_applications` - (Optional) An `client_applications` block as documented below, which specifies service principals included in and excluded from the policy. Either `client_applications` or `users` must be specified (and not both).
 * `client_app_types` - (Required) A list of client application types included in the policy. Possible values are: `all`, `browser`, `mobileAppsAndDesktopClients`, `exchangeActiveSync`, `easSupported` and `other`.
 * `devices` - (Optional) A `devices` block as documented below, which describes devices to be included in and excluded from the policy. A `devices` block can be added to an existing policy, but removing the `devices` block forces a new resource to be created.
 * `locations` - (Optional) A `locations` block as documented below, which specifies locations included in and excluded from the policy.
 * `platforms` - (Optional) A `platforms` block as documented below, which specifies platforms included in and excluded from the policy.
 * `sign_in_risk_levels` - (Optional) A list of sign-in risk levels included in the policy. Possible values are: `low`, `medium`, `high`, `hidden`, `none`, `unknownFutureValue`.
 * `user_risk_levels` - (Optional) A list of user risk levels included in the policy. Possible values are: `low`, `medium`, `high`, `hidden`, `none`, `unknownFutureValue`.
-* `users` - (Required) A `users` block as documented below, which specifies users, groups, and roles included in and excluded from the policy.
+* `users` - (Optional) A `users` block as documented below, which specifies users, groups, and roles included in and excluded from the policy. Either `client_applications` or `users` must be specified (and not both).
 
 ---
 
@@ -173,7 +173,7 @@ The following arguments are supported:
 
 `client_applications` block supports the following:
 
-* `excluded_service_principals` - (Optional) A list of service principal IDs explicitly excluded in the policy.
+* `excluded_service_principals` - (Optional) A list of service principal IDs explicitly excluded in the policy. Can also be set to `All`.
 * `included_service_principals` - (Optional) A list of service principal IDs explicitly included in the policy. Can also be set to `All` or `None`.
 
 ---
