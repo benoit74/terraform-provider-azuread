@@ -173,8 +173,8 @@ The following arguments are supported:
 
 `client_applications` block supports the following:
 
-* `excluded_service_principals` - (Optional) A list of service principal IDs explicitly excluded in the policy. Can also be set to `All`.
-* `included_service_principals` - (Optional) A list of service principal IDs explicitly included in the policy. Can also be set to `All` or `None`.
+* `excluded_service_principals` - (Optional) A list of service principal IDs explicitly excluded in the policy.
+* `included_service_principals` - (Optional) A list of service principal IDs explicitly included in the policy. Can be set to `ServicePrincipalsInMyTenant` to include all service principals. This is mandatory value when at least one `excluded_service_principals` is set.
 
 ---
 

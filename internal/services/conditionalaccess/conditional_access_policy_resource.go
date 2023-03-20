@@ -108,7 +108,7 @@ func conditionalAccessPolicyResource() *schema.Resource {
 
 						"client_applications": {
 							Type:     schema.TypeList,
-							Required: true,
+							Optional: true,
 							MaxItems: 1,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
@@ -135,14 +135,15 @@ func conditionalAccessPolicyResource() *schema.Resource {
 
 						"users": {
 							Type:     schema.TypeList,
-							Required: true,
+							Optional: true,
 							MaxItems: 1,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 									"included_users": {
-										Type:         schema.TypeList,
-										Optional:     true,
-										AtLeastOneOf: []string{"conditions.0.users.0.included_groups", "conditions.0.users.0.included_roles", "conditions.0.users.0.included_users"},
+										Type:             schema.TypeList,
+										Optional:         true,
+										AtLeastOneOf:     []string{"conditions.0.users.0.included_groups", "conditions.0.users.0.included_roles", "conditions.0.users.0.included_users"},
+										DiffSuppressFunc: conditionalAccessPolicyDiffSuppress,
 										Elem: &schema.Schema{
 											Type:             schema.TypeString,
 											ValidateDiagFunc: validate.NoEmptyStrings,
@@ -479,6 +480,7 @@ func conditionalAccessPolicyCustomizeDiff(ctx context.Context, diff *schema.Reso
 
 func conditionalAccessPolicyDiffSuppress(k, old, new string, d *schema.ResourceData) bool {
 	suppress := false
+	//tflog.Info(context.Background(), fmt.Sprintf("kkkk: %s", k))
 
 	switch {
 	case k == "session_controls.#" && old == "0" && new == "1":
